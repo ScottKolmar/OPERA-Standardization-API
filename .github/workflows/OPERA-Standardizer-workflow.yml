@@ -1,9 +1,9 @@
 name: OPERA-Standardizer-workfow
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build:
-    runs-on: [Skolmar]
+    runs-on: [self-hosted]
     steps:
       - uses: actions/checkout@v2
       - name: docker build
