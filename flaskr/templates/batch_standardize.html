@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <head>
+    <title>File Upload</title>
+  </head>
+  <body>
+    <h1>Batch Standardizer</h1>
+    <p> If you'd like to upload a batch file and standardize, submit in the form below. The file format must be .txt or .smi.
+      The file must contain newline delimited SMILES strings. Otherwise, include a search query of comma delimited SMILES to return standardized strings.
+      (.i.e. /batch/standardize/?smiles=CCC,CCCC,CCCCC)
+    </p>
+    <h2>File Upload</h2>
+    <form method="POST" action="" enctype="multipart/form-data">
+      <p><input type="file" name="file"></p>
+      <p><input type="submit" value="Submit and Standardize"></p>
+    </form>
+  </body>
+</html>
