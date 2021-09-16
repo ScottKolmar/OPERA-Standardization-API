@@ -46,6 +46,3 @@ ENV FLASK_APP=flaskr
 
 # Expose port
 EXPOSE 5000
-
-# Start app
-ENTRYPOINT ["flask run", "-h 0.0.0.0", "-p 5000"]

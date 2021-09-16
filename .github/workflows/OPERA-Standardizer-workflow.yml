@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: [self-hosted]
+    runs-on: [Skolmar]
     steps:
       - uses: actions/checkout@v2
       - name: docker build
@@ -12,4 +12,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: docker run
         run: |
-          docker run -d -it -p 5015:5000 pf_opera_standardizer
+          docker run --name pf_opera_standardizer_cont -d -it -p 5015:5000 pf_opera_standardizer
+      - uses: actions/checkout@v2
+      - name: docker exec
+        run: |
+          docker exec pf_opera_standardizer_cont flask run -h 0.0.0.0 -p 5000
