@@ -1,0 +1,19 @@
+name: OPERA-Standardizer-workfow
+on:
+  push:
+    branches: [master]
+  pull_requests:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: [self-hosted]
+    steps:
+      - uses: actions/checkout@v2
+      - name: docker build
+        run: |
+          docker build -t pf_opera_standardizer .
+      - uses: actions/checkout@v2
+      - name: docker run
+        run: |
+          docker run -d -it -p 5001:5000 pf_opera_standardizer
