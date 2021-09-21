@@ -221,7 +221,7 @@ def create_app(test_config=None):
                 abort(422)
             
             # Recognize summary file name
-            summaryfilepath = os.path.normpath(os.path.join(projpath, 'input_Summary_file.csv'))
+            summaryfilepath = os.path.normpath(os.path.join(projpath, 'temp_files', 'input_Summary_file.csv'))
 
             # Read structure from summary file
             with open(summaryfilepath, 'r') as f:
