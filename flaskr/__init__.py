@@ -234,7 +234,7 @@ def create_app(test_config=None):
             for i in range(1, len(rows)):
                 standardized_structures.append(rows[i][4])
             
-            standardized_dicts = [{'SMILES': smiles_list[i], 'standardized SMILES': standardized_structures[i]} for i in len(standardized_structures)]
+            standardized_dicts = [{'SMILES': smiles_list[i], 'standardized SMILES': standardized_structures[i]} for i in range(len(standardized_structures))]
         
             # End Timer
             end_time = time.perf_counter()
