@@ -28,7 +28,7 @@ Each of the endpoints listed in the description can be accessed for predictions.
     'success': True,
     'SMILES': 'CCC',
     'Standardized SMILES': 'CCC',
-    'time': '32.1 s'
+    'time': 32.1
 }
 ```
 Batch calculations can also be performed on comma delimited, tab delimited, newline delimited, and space delimited strings of SMILES strings. For example:
@@ -49,7 +49,7 @@ Batch calculations can also be performed on comma delimited, tab delimited, newl
         'standardized SMILES: 'CCCC'
     }],
     "success": true,
-    "time": 10.78 s
+    "time": 10.78
 }
 ```
 
@@ -69,7 +69,7 @@ Batch calculations can also be performed on comma delimited, tab delimited, newl
         'standardized SMILES: 'CCCC'
     }],
     "success": true,
-    "time": 10.78 s
+    "time": 10.78
 }
 ```
 
