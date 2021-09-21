@@ -86,7 +86,7 @@ def create_app(test_config=None):
                 'success': True,
                 'SMILES': smiles,
                 'Standardized SMILES': structure,
-                'time': f'{total_time: .2f} s'
+                'time': total_time
             })
         
     @app.route('/batch/standardize/', methods=['GET', 'POST'])
@@ -170,7 +170,7 @@ def create_app(test_config=None):
             return jsonify({
                 'success': True,
                 'standardizations': standardized_dicts,
-                'time': f'{total_time: .2f} s'
+                'time': total_time
             })
         
         # Filter for GET
@@ -243,7 +243,7 @@ def create_app(test_config=None):
             return jsonify({
                 'success': True,
                 'standardizations': standardized_dicts,
-                'time': f'{total_time: .2f} s'
+                'time': total_time
             })
 
     # Error Handlers
