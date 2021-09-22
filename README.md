@@ -21,6 +21,7 @@ Each of the endpoints listed in the description can be accessed for predictions.
 #### GET '/standardize?smiles={smiles_string}'
 - Standardizes the input SMILES string
 - Returns: A JSON object with a Standardized SMILES key with value of the standardized SMILES string, a SMILES key with value of the input SMILES string, a timer key with value of the time elapsed in seconds, and a success key, with value True if the calculation succeeded and False if an error occurred.
+- If a structure can not be standardized by OPERA, the calculation will fail and no structure will be returned.
 - Example: ```curl -L http://127.0.0.1:5000/standardize?smiles=CCC```
 
 ```
@@ -36,6 +37,7 @@ Batch calculations can also be performed on comma delimited, tab delimited, newl
 #### GET /batch/standardize?smiles={delimited_smiles_strings}'
 - Standardizes a list of SMILES strings.
 - Returns: Returns: A JSON object with a standardized key and value of a dictionary containing Standardized SMILES and input SMILES, a timer key with value of the time elapsed in seconds, and a success key, with value True if the calculation succeeded and False if an error occurred.
+- Structures that can not be standardized by OPERA will be returned with a None value for 'standardized SMILES'.
 - Example: ```curl -L http://127.0.0.1:5000/batch/logBCF?smiles=CCC,CCCC```
 
 ```
@@ -56,6 +58,7 @@ Batch calculations can also be performed on comma delimited, tab delimited, newl
 #### POST /batch/standardize/'
 - Standardizes SMILES strings in an uploaded file.
 - Returns: A JSON object with a standardized key and value of a dictionary containing Standardized SMILES and input SMILES, a timer key with value of the time elapsed in seconds, and a success key, with value True if the calculation succeeded and False if an error occurred.
+- Structures that can not be standardized by OPERA will be returned with a None value for 'standardized SMILES'.
 - Example: ```curl -F "file=@C:\Users\Administrator\OneDrive\Profile\Desktop\OPERA_dummy_calcs\multiple_input.smi" http://127.0.0.1:5000/batch/standardize/```
 
 ```
