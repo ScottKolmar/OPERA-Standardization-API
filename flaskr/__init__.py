@@ -57,35 +57,37 @@ def create_app(test_config=None):
                 f.write(smiles)
                 f.close()
 
-            try:
-                # Run opera command with standardization
-                opera_shell = '../usr/local/bin/OPERA/application/run_OPERA.sh'
-                matlab_runtime = '../usr/local/MATLAB/MATLAB_Runtime/v99'
-                command = f'./{opera_shell} {matlab_runtime} -s {inputfilepath} -o {outputfilepath} -st'
-                os.system(command)
-            
-            except:
-                abort(422)
+            # Run opera command with standardization
+            opera_shell = '../usr/local/bin/OPERA/application/run_OPERA.sh'
+            matlab_runtime = '../usr/local/MATLAB/MATLAB_Runtime/v99'
+            command = f'./{opera_shell} {matlab_runtime} -s {inputfilepath} -o {outputfilepath} -st'
+            os.system(command)
 
             # Recognize summary file name
             summaryfilepath = os.path.normpath(os.path.join(projpath, 'temp_files', 'input_Summary_file.csv'))
 
-            # Read structure from summary file
-            with open(summaryfilepath, 'r') as f:
-                reader = csv.reader(f)
-                rows = []
-                for row in reader:
-                    rows.append(row)
-            structure = rows[1][4]
+            # Read summary file using pandas
+            summary_df = pd.read_csv(summaryfilepath, header=0)
+            standardized_smiles = summary_df['Canonical_QSARr']
+            if smiles not in summary_df['Original_SMILES'].values:
+                standardized_smiles = None
+            else:
+                standardized_smiles = summary_df['Canonical_QSARr'].iloc[0]
         
             # End Timer
             end_time = time.perf_counter()
             total_time = end_time - start_time
 
+            # Clear temporary files
+            current_dir = os.path.dirname(os.path.realpath(__file__))
+            temp_files_dir = os.path.join(current_dir, '../', 'temp_files')
+            for f in os.listdir(temp_files_dir):
+                os.remove(f)
+
             return jsonify({
                 'success': True,
                 'SMILES': smiles,
-                'Standardized SMILES': structure,
+                'Standardized SMILES': standardized_smiles,
                 'time': total_time
             })
         
@@ -164,6 +166,12 @@ def create_app(test_config=None):
             end_time = time.perf_counter()
             total_time = end_time - start_time
 
+            # Clear temporary files
+            current_dir = os.path.dirname(os.path.realpath(__file__))
+            temp_files_dir = os.path.join(current_dir, '../', 'temp_files')
+            for f in os.listdir(temp_files_dir):
+                os.remove(f)
+
             return jsonify({
                 'success': True,
                 'standardizations': standardized_dicts,
@@ -233,6 +241,12 @@ def create_app(test_config=None):
             # End Timer
             end_time = time.perf_counter()
             total_time = end_time - start_time
+
+            # Clear temporary files
+            current_dir = os.path.dirname(os.path.realpath(__file__))
+            temp_files_dir = os.path.join(current_dir, '../', 'temp_files')
+            for f in os.listdir(temp_files_dir):
+                os.remove(f)
 
             return jsonify({
                 'success': True,
