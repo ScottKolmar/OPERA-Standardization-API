@@ -149,19 +149,16 @@ def create_app(test_config=None):
 
             # Recognize summary file name
             summaryfilepath = os.path.normpath(os.path.join(projdir, 'temp_files', 'input_Summary_file.csv'))
+            
+            # Read structure from summary file with
+            summary_df = pd.read_csv(summaryfilepath, header=0)
 
-            # Read structure from summary file
-            with open(summaryfilepath, 'r') as f:
-                reader = csv.reader(f)
-                rows = []
-                for row in reader:
-                    rows.append(row)
+            # Concatenate missing structures into summary dataframe
+            missing_smiles_df = pd.concat([pd.DataFrame(data = {'Original_SMILES': [smiles], 'Canonical_QSARr': [None]}) for smiles in smiles_list if smiles not in summary_df['Original_SMILES'].values], ignore_index=True)
+            summary_df = pd.concat([summary_df, missing_smiles_df])
             
-            standardized_structures = []
-            for i in range(1, len(rows)):
-                standardized_structures.append(rows[i][4])
-            
-            standardized_dicts = [{'SMILES': smiles_list[i], 'standardized SMILES': standardized_structures[i]} for i in range(len(standardized_structures))]
+            # Construct output dictionary
+            standardized_dicts = [{'SMILES': summary_df['Original_SMILES'].iloc[i], 'standardized SMILES': summary_df['Canonical_QSARr'].iloc[i]} for i in range(len(summary_df['Original_SMILES']))]
         
             # End Timer
             end_time = time.perf_counter()
@@ -223,18 +220,15 @@ def create_app(test_config=None):
             # Recognize summary file name
             summaryfilepath = os.path.normpath(os.path.join(projpath, 'temp_files', 'input_Summary_file.csv'))
 
-            # Read structure from summary file
-            with open(summaryfilepath, 'r') as f:
-                reader = csv.reader(f)
-                rows = []
-                for row in reader:
-                    rows.append(row)
+            # Read structure from summary file with
+            summary_df = pd.read_csv(summaryfilepath, header=0)
+
+            # Concatenate missing structures into summary dataframe
+            missing_smiles_df = pd.concat([pd.DataFrame(data = {'Original_SMILES': [smiles], 'Canonical_QSARr': [None]}) for smiles in smiles_list if smiles not in summary_df['Original_SMILES'].values], ignore_index=True)
+            summary_df = pd.concat([summary_df, missing_smiles_df])
             
-            standardized_structures = []
-            for i in range(1, len(rows)):
-                standardized_structures.append(rows[i][4])
-            
-            standardized_dicts = [{'SMILES': smiles_list[i], 'standardized SMILES': standardized_structures[i]} for i in range(len(standardized_structures))]
+            # Construct output dictionary
+            standardized_dicts = [{'SMILES': summary_df['Original_SMILES'].iloc[i], 'standardized SMILES': summary_df['Canonical_QSARr'].iloc[i]} for i in range(len(summary_df['Original_SMILES']))]
         
             # End Timer
             end_time = time.perf_counter()
