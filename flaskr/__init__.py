@@ -79,11 +79,11 @@ def create_app(test_config=None):
             total_time = end_time - start_time
 
             # Clear temporary files
-            current_dir = os.path.dirname(os.path.realpath(__file__))
-            temp_files_dir = os.path.join(current_dir, '../', 'temp_files')
+            temp_files_dir = os.path.join(projpath, 'temp_files')
             for f in os.listdir(temp_files_dir):
                 if f != '.gitkeep':
-                    os.remove(f)
+                    file_path = os.path.join(projpath, 'temp_files', f)
+                    os.remove(file_path)
 
             return jsonify({
                 'success': True,
@@ -168,11 +168,11 @@ def create_app(test_config=None):
             total_time = end_time - start_time
 
             # Clear temporary files
-            current_dir = os.path.dirname(os.path.realpath(__file__))
-            temp_files_dir = os.path.join(current_dir, '../', 'temp_files')
+            temp_files_dir = os.path.join(projdir, '../', 'temp_files')
             for f in os.listdir(temp_files_dir):
                 if f != '.gitkeep':
-                    os.remove(f)
+                    file_path = os.path.join(projdir, 'temp_files', f)
+                    os.remove(file_path)
 
             return jsonify({
                 'success': True,
@@ -245,11 +245,11 @@ def create_app(test_config=None):
             total_time = end_time - start_time
 
             # Clear temporary files
-            current_dir = os.path.dirname(os.path.realpath(__file__))
-            temp_files_dir = os.path.join(current_dir, '../', 'temp_files')
+            temp_files_dir = os.path.join(projpath, '../', 'temp_files')
             for f in os.listdir(temp_files_dir):
                 if f != '.gitkeep':
-                    os.remove(f)
+                    file_path = os.path.join(projpath, 'temp_files', f)
+                    os.remove(file_path)
 
             return jsonify({
                 'success': True,
