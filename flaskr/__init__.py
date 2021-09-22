@@ -82,7 +82,8 @@ def create_app(test_config=None):
             current_dir = os.path.dirname(os.path.realpath(__file__))
             temp_files_dir = os.path.join(current_dir, '../', 'temp_files')
             for f in os.listdir(temp_files_dir):
-                os.remove(f)
+                if f != '.gitkeep':
+                    os.remove(f)
 
             return jsonify({
                 'success': True,
@@ -170,7 +171,8 @@ def create_app(test_config=None):
             current_dir = os.path.dirname(os.path.realpath(__file__))
             temp_files_dir = os.path.join(current_dir, '../', 'temp_files')
             for f in os.listdir(temp_files_dir):
-                os.remove(f)
+                if f != '.gitkeep':
+                    os.remove(f)
 
             return jsonify({
                 'success': True,
@@ -246,7 +248,8 @@ def create_app(test_config=None):
             current_dir = os.path.dirname(os.path.realpath(__file__))
             temp_files_dir = os.path.join(current_dir, '../', 'temp_files')
             for f in os.listdir(temp_files_dir):
-                os.remove(f)
+                if f != '.gitkeep':
+                    os.remove(f)
 
             return jsonify({
                 'success': True,
