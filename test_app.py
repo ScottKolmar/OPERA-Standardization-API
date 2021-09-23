@@ -90,50 +90,52 @@ class OPERAStandardizerAPITestCase(unittest.TestCase):
         """ Test for batch input with a file containing good smiles. """
         data = {}
         with open(self.batch_file_good_inputs, 'rb') as f: 
-            data['file'] = (f, f.name)
-        
-        res = self.client().post(f'/batch/standardize/', content_type='multipart/form-data', data=data)
-        data = json.loads(res.data)
+            file = FileStorage(f, self.batch_file_good_inputs, name=self.batch_file_good_inputs, content_type='txt')
+            data['file'] = file
+            res = self.client().post(f'/batch/standardize/', content_type='multipart/form-data', data=data)
+            data = json.loads(res.data)
 
-        self.assertEqual(res.status_code, 200)
-        self.assertTrue(data['success'])
-        self.assertEqual(len(data['standardizations']), 4)
-        self.assertEqual(data['standardizations'][0]['SMILES'], 'CC')
-        self.assertEqual(data['standardizations'][0]['standardized SMILES'], 'CC')
+            self.assertEqual(res.status_code, 200)
+            self.assertTrue(data['success'])
+            self.assertEqual(len(data['standardizations']), 4)
+            self.assertEqual(data['standardizations'][0]['SMILES'], 'CC')
+            self.assertEqual(data['standardizations'][0]['standardized SMILES'], 'CC')
 
     def test_batch_standardizer_file_good_and_bad_inputs(self):
         """ Test for batch input with a file containing good and bad smiles. """
         data = {}
-        with open(self.batch_file_good_and_bad_inputs, 'rb') as f: 
-            data['file'] = (f, f.name)
+        with open(self.batch_file_good_and_bad_inputs, 'rb') as f:
+            file = FileStorage(f, self.batch_file_good_and_bad_inputs, name=self.batch_file_good_and_bad_inputs, content_type='txt') 
+            data['file'] = file
         
-        res = self.client().post(f'/batch/standardize/', content_type='multipart/form-data', data=data)
-        data = json.loads(res.data)
+            res = self.client().post(f'/batch/standardize/', content_type='multipart/form-data', data=data)
+            data = json.loads(res.data)
 
-        self.assertEqual(res.status_code, 200)
-        self.assertTrue(data['success'])
-        self.assertEqual(len(data['standardizations']), 4)
-        self.assertEqual(data['standardizations'][0]['SMILES'], 'CC')
-        self.assertEqual(data['standardizations'][0]['standardized SMILES'], 'CC')
-        self.assertEqual(data['standardizations'][-1]['SMILES'], 'H[Sn]C')
-        self.assertEqual(data['standardizations'][-1]['standardized SMILES'], None)
+            self.assertEqual(res.status_code, 200)
+            self.assertTrue(data['success'])
+            self.assertEqual(len(data['standardizations']), 4)
+            self.assertEqual(data['standardizations'][0]['SMILES'], 'CC')
+            self.assertEqual(data['standardizations'][0]['standardized SMILES'], 'CC')
+            self.assertEqual(data['standardizations'][-1]['SMILES'], 'H[Sn]C')
+            self.assertEqual(data['standardizations'][-1]['standardized SMILES'], None)
 
     def test_batch_standardizer_file_good_bad_and_missing_inputs(self):
         """ Test for batch input with a file containing good, bad, and missing smiles. """
         data = {}
         with open(self.batch_file_good_bad_and_missing_inputs, 'rb') as f: 
-            data['file'] = (f, f.name)
+            file = FileStorage(f, self.batch_file_good_bad_and_missing_inputs, name=self.batch_file_good_bad_and_missing_inputs, content_type='txt') 
+            data['file'] = file
         
-        res = self.client().post(f'/batch/standardize/', content_type='multipart/form-data', data=data)
-        data = json.loads(res.data)
+            res = self.client().post(f'/batch/standardize/', content_type='multipart/form-data', data=data)
+            data = json.loads(res.data)
 
-        self.assertEqual(res.status_code, 200)
-        self.assertTrue(data['success'])
-        self.assertEqual(len(data['standardizations']), 3)
-        self.assertEqual(data['standardizations'][0]['SMILES'], 'CC')
-        self.assertEqual(data['standardizations'][0]['standardized SMILES'], 'CC')
-        self.assertEqual(data['standardizations'][-1]['SMILES'], 'H[Sn]C')
-        self.assertEqual(data['standardizations'][-1]['standardized SMILES'], None)
+            self.assertEqual(res.status_code, 200)
+            self.assertTrue(data['success'])
+            self.assertEqual(len(data['standardizations']), 3)
+            self.assertEqual(data['standardizations'][0]['SMILES'], 'CC')
+            self.assertEqual(data['standardizations'][0]['standardized SMILES'], 'CC')
+            self.assertEqual(data['standardizations'][-1]['SMILES'], 'H[Sn]C')
+            self.assertEqual(data['standardizations'][-1]['standardized SMILES'], None)
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
