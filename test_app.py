@@ -80,8 +80,8 @@ class OPERAStandardizerAPITestCase(unittest.TestCase):
         self.assertEqual(len(data['standardizations']), 4)
         self.assertEqual(data['standardizations'][0]['SMILES'], 'CC')
         self.assertEqual(data['standardizations'][0]['standardized SMILES'], 'CC')
-        self.assertEqual(data['standardizations'][2]['SMILES'], 'H[Sn]C')
-        self.assertEqual(data['standardizations'][2]['standardized SMILES'], None)
+        self.assertEqual(data['standardizations'][-1]['SMILES'], 'H[Sn]C')
+        self.assertEqual(data['standardizations'][-1]['standardized SMILES'], None)
     
 #-------------------
 # Batch File Mode
@@ -115,8 +115,8 @@ class OPERAStandardizerAPITestCase(unittest.TestCase):
         self.assertEqual(len(data['standardizations']), 4)
         self.assertEqual(data['standardizations'][0]['SMILES'], 'CC')
         self.assertEqual(data['standardizations'][0]['standardized SMILES'], 'CC')
-        self.assertEqual(data['standardizations'][2]['SMILES'], 'H[Sn]C')
-        self.assertEqual(data['standardizations'][2]['standardized SMILES'], None)
+        self.assertEqual(data['standardizations'][-1]['SMILES'], 'H[Sn]C')
+        self.assertEqual(data['standardizations'][-1]['standardized SMILES'], None)
 
     def test_batch_standardizer_file_good_bad_and_missing_inputs(self):
         """ Test for batch input with a file containing good, bad, and missing smiles. """
@@ -132,8 +132,8 @@ class OPERAStandardizerAPITestCase(unittest.TestCase):
         self.assertEqual(len(data['standardizations']), 3)
         self.assertEqual(data['standardizations'][0]['SMILES'], 'CC')
         self.assertEqual(data['standardizations'][0]['standardized SMILES'], 'CC')
-        self.assertEqual(data['standardizations'][1]['SMILES'], 'H[Sn]C')
-        self.assertEqual(data['standardizations'][1]['standardized SMILES'], None)
+        self.assertEqual(data['standardizations'][-1]['SMILES'], 'H[Sn]C')
+        self.assertEqual(data['standardizations'][-1]['standardized SMILES'], None)
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
