@@ -47,7 +47,7 @@ class OPERAStandardizerAPITestCase(unittest.TestCase):
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
-        self.assertTrue(data['successs'])
+        self.assertTrue(data['success'])
         self.assertEqual(data['SMILES'], smiles)
         self.assertEqual(data['Standardizes SMILES'], 'CCC')
     
@@ -58,7 +58,7 @@ class OPERAStandardizerAPITestCase(unittest.TestCase):
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 500)
-        self.assertFalse(data['successs'])
+        self.assertFalse(data['success'])
 
 #-------------------
 # Batch String Mode
@@ -71,7 +71,7 @@ class OPERAStandardizerAPITestCase(unittest.TestCase):
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
-        self.assertTrue(data['successs'])
+        self.assertTrue(data['success'])
         self.assertEqual(len(data['standardizations']), 4)
         self.assertEqual(data['standardizations'][0]['SMILES'], 'CC')
         self.assertEqual(data['standardizations'][0]['standardized SMILES'], 'CC')
@@ -83,7 +83,7 @@ class OPERAStandardizerAPITestCase(unittest.TestCase):
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
-        self.assertTrue(data['successs'])
+        self.assertTrue(data['success'])
         self.assertEqual(len(data['standardizations']), 4)
         self.assertEqual(data['standardizations'][0]['SMILES'], 'CC')
         self.assertEqual(data['standardizations'][0]['standardized SMILES'], 'CC')
@@ -104,7 +104,7 @@ class OPERAStandardizerAPITestCase(unittest.TestCase):
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
-        self.assertTrue(data['successs'])
+        self.assertTrue(data['success'])
         self.assertEqual(len(data['standardizations']), 4)
         self.assertEqual(data['standardizations'][0]['SMILES'], 'CC')
         self.assertEqual(data['standardizations'][0]['standardized SMILES'], 'CC')
@@ -120,7 +120,7 @@ class OPERAStandardizerAPITestCase(unittest.TestCase):
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
-        self.assertTrue(data['successs'])
+        self.assertTrue(data['success'])
         self.assertEqual(len(data['standardizations']), 4)
         self.assertEqual(data['standardizations'][0]['SMILES'], 'CC')
         self.assertEqual(data['standardizations'][0]['standardized SMILES'], 'CC')
