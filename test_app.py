@@ -49,7 +49,7 @@ class OPERAStandardizerAPITestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertTrue(data['success'])
         self.assertEqual(data['SMILES'], smiles)
-        self.assertEqual(data['Standardizes SMILES'], 'CCC')
+        self.assertEqual(data['Standardized SMILES'], 'CCC')
     
     def test_fail_standardizer_bad_input(self):
         """ Test for failure with bad input SMILES. """
@@ -95,10 +95,9 @@ class OPERAStandardizerAPITestCase(unittest.TestCase):
 #-------------------
     def test_batch_standardizer_file_good_inputs(self):
         """ Test for batch input with a file containing good smiles. """
-        data = {
-            'file': (BytesIO('my file contents'),
-            self.batch_file_good_inputs)
-            }
+        data = {}
+        with open(self.batch_file_good_inputs, 'rb') as f: 
+            data['file'] = (f, f.name)
         
         res = self.client().post(f'/batch/standardize/', content_type='multipart/form-data', data=data)
         data = json.loads(res.data)
@@ -111,10 +110,9 @@ class OPERAStandardizerAPITestCase(unittest.TestCase):
 
     def test_batch_standardizer_file_good_and_bad_inputs(self):
         """ Test for batch input with a file containing good and bad smiles. """
-        data = {
-            'file': (BytesIO('my file contents'),
-            self.batch_file_good_and_bad_inputs)
-            }
+        data = {}
+        with open(self.batch_file_good_and_bad_inputs, 'rb') as f: 
+            data['file'] = (f, f.name)
         
         res = self.client().post(f'/batch/standardize/', content_type='multipart/form-data', data=data)
         data = json.loads(res.data)
@@ -126,6 +124,23 @@ class OPERAStandardizerAPITestCase(unittest.TestCase):
         self.assertEqual(data['standardizations'][0]['standardized SMILES'], 'CC')
         self.assertEqual(data['standardizations'][2]['SMILES'], 'H[Sn]C')
         self.assertEqual(data['standardizations'][2]['standardized SMILES'], None)
+
+    def test_batch_standardizer_file_good_bad_and_missing_inputs(self):
+        """ Test for batch input with a file containing good, bad, and missing smiles. """
+        data = {}
+        with open(self.batch_file_good_bad_and_missing_inputs, 'rb') as f: 
+            data['file'] = (f, f.name)
+        
+        res = self.client().post(f'/batch/standardize/', content_type='multipart/form-data', data=data)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data['success'])
+        self.assertEqual(len(data['standardizations']), 3)
+        self.assertEqual(data['standardizations'][0]['SMILES'], 'CC')
+        self.assertEqual(data['standardizations'][0]['standardized SMILES'], 'CC')
+        self.assertEqual(data['standardizations'][1]['SMILES'], 'H[Sn]C')
+        self.assertEqual(data['standardizations'][1]['standardized SMILES'], None)
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
