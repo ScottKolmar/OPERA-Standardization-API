@@ -29,13 +29,6 @@ class OPERAStandardizerAPITestCase(unittest.TestCase):
 # TESTS
 #--------------
 
-    def test_index(self):
-        """ Test for GET / """
-        res = self.client().get('/')
-        data = json.loads(res.data)
-
-        self.assertEqual(res.status_code, 200)
-
 #--------------
 # Single Mode
 #--------------
