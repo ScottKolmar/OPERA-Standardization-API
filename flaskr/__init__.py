@@ -66,13 +66,19 @@ def create_app(test_config=None):
             # Recognize summary file name
             summaryfilepath = os.path.normpath(os.path.join(projpath, 'temp_files', 'input_Summary_file.csv'))
 
-            # Read summary file using pandas
-            summary_df = pd.read_csv(summaryfilepath, header=0)
-            standardized_smiles = summary_df['Canonical_QSARr']
-            if smiles not in summary_df['Original_SMILES'].values:
+            # If summary file DOESN'T exist due to unstandardizable smiles
+            if not summaryfilepath:
                 standardized_smiles = None
+            
+            # If summary file DOES exist
             else:
-                standardized_smiles = summary_df['Canonical_QSARr'].iloc[0]
+                # Read summary file using pandas
+                summary_df = pd.read_csv(summaryfilepath, header=0)
+                standardized_smiles = summary_df['Canonical_QSARr']
+                if smiles not in summary_df['Original_SMILES'].values:
+                    standardized_smiles = None
+                else:
+                    standardized_smiles = summary_df['Canonical_QSARr'].iloc[0]
         
             # End Timer
             end_time = time.perf_counter()
@@ -285,5 +291,13 @@ def create_app(test_config=None):
             "error": 422,
             "message": "Unprocessable Request"
         }), 422
+
+    @app.errorhandler(500)
+    def unprocessable_request(error):
+        return jsonify({
+            "success": False,
+            "error": 500,
+            "message": "Server Error"
+        }), 500
                 
     return app
