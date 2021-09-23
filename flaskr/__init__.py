@@ -157,8 +157,10 @@ def create_app(test_config=None):
             summary_df = pd.read_csv(summaryfilepath, header=0)
 
             # Concatenate missing structures into summary dataframe
-            missing_smiles_df = pd.concat([pd.DataFrame(data = {'Original_SMILES': [smiles], 'Canonical_QSARr': [None]}) for smiles in smiles_list if smiles not in summary_df['Original_SMILES'].values], ignore_index=True)
-            summary_df = pd.concat([summary_df, missing_smiles_df])
+            missing_smiles_df_list = [pd.DataFrame(data = {'Original_SMILES': [smiles], 'Canonical_QSARr': [None]}) for smiles in smiles_list if smiles not in summary_df['Original_SMILES'].values]
+            if missing_smiles_df_list:
+                missing_smiles_df = pd.concat([pd.DataFrame(data = {'Original_SMILES': [smiles], 'Canonical_QSARr': [None]}) for smiles in smiles_list if smiles not in summary_df['Original_SMILES'].values], ignore_index=True)
+                summary_df = pd.concat([summary_df, missing_smiles_df])
             
             # Construct output dictionary
             standardized_dicts = [{'SMILES': summary_df['Original_SMILES'].iloc[i], 'standardized SMILES': summary_df['Canonical_QSARr'].iloc[i]} for i in range(len(summary_df['Original_SMILES']))]
@@ -234,8 +236,10 @@ def create_app(test_config=None):
             summary_df = pd.read_csv(summaryfilepath, header=0)
 
             # Concatenate missing structures into summary dataframe
-            missing_smiles_df = pd.concat([pd.DataFrame(data = {'Original_SMILES': [smiles], 'Canonical_QSARr': [None]}) for smiles in smiles_list if smiles not in summary_df['Original_SMILES'].values], ignore_index=True)
-            summary_df = pd.concat([summary_df, missing_smiles_df])
+            missing_smiles_df_list = [pd.DataFrame(data = {'Original_SMILES': [smiles], 'Canonical_QSARr': [None]}) for smiles in smiles_list if smiles not in summary_df['Original_SMILES'].values]
+            if missing_smiles_df_list:
+                missing_smiles_df = pd.concat([pd.DataFrame(data = {'Original_SMILES': [smiles], 'Canonical_QSARr': [None]}) for smiles in smiles_list if smiles not in summary_df['Original_SMILES'].values], ignore_index=True)
+                summary_df = pd.concat([summary_df, missing_smiles_df])
             
             # Construct output dictionary
             standardized_dicts = [{'SMILES': summary_df['Original_SMILES'].iloc[i], 'standardized SMILES': summary_df['Canonical_QSARr'].iloc[i]} for i in range(len(summary_df['Original_SMILES']))]
