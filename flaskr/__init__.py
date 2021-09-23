@@ -168,7 +168,7 @@ def create_app(test_config=None):
             total_time = end_time - start_time
 
             # Clear temporary files
-            temp_files_dir = os.path.join(projdir, '../', 'temp_files')
+            temp_files_dir = os.path.join(projdir, 'temp_files')
             for f in os.listdir(temp_files_dir):
                 if f != '.gitkeep':
                     file_path = os.path.join(projdir, 'temp_files', f)
@@ -245,7 +245,7 @@ def create_app(test_config=None):
             total_time = end_time - start_time
 
             # Clear temporary files
-            temp_files_dir = os.path.join(projpath, '../', 'temp_files')
+            temp_files_dir = os.path.join(projpath, 'temp_files')
             for f in os.listdir(temp_files_dir):
                 if f != '.gitkeep':
                     file_path = os.path.join(projpath, 'temp_files', f)
